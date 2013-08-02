@@ -1,0 +1,41 @@
+{
+	"name": "simpleInline",
+	"title": "jQuery Simple Inline Edit",
+	"description": "A simple plugin for inline edit using contenteditable.",
+	"keywords": [
+		"jquery",
+		"inline edit",
+    "contenteditable"
+	],
+	"version": "0.1.0",
+	"author": {
+    "name": "Hendrik Beneke",
+    "email": "hendrik.beneke@gmail.com",
+    "url": "https://github.com/hendrikbeneke"
+	},
+	"maintainers": [
+		{
+      "name": "Hendrik Beneke",
+      "email": "hendrik.beneke@gmail.com",
+      "url": "https://github.com/hendrikbeneke"
+		},
+		{
+			"name": "Peter Klostermann",
+			"email": "",
+			"url": "https://github.com/peterklostermann"
+		}
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://mit-license.org/"
+		}
+	],
+	"bugs": "https://github.com/hendrikbeneke/simpleInline/issues",
+	"homepage": "http://hendrikbeneke.com",
+	"docs": "https://github.com/hendrikbeneke/simpleInline#readme",
+	"download": "https://github.com/hendrikbeneke/simpleInline/archive/master.zip",
+	"dependencies": {
+		"jquery": ">=1.4"
+	}
+}

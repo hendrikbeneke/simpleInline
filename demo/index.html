@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Simple Inline</title>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script src="../src/jquery.simpleInline.js"></script>
+    <style type="text/css">
+      .inline-placeholder {
+        display: inline-block;
+      }
+
+      .inline-placeholder:after{ 
+        content: attr(data-inline-placeholder-text);
+      }
+
+      .editing {
+        min-width: 100px;
+        display: inline-block;
+        background-color: gray;
+      }
+
+    </style>
+	</head>
+	<body>
+		<script>
+			$(function() {
+				$(".editable").simpleInline();
+			});
+		</script>
+    <p>This <span class="editable" data-inline-placeholder-text="field"></span> is editable</p>
+	</body>
+</html>
