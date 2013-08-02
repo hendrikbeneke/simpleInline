@@ -6,7 +6,7 @@
 		<script src="../src/jquery.simpleInline.js"></script>
     <style type="text/css">
       .inline-placeholder {
-        display: inline-block;
+        /*display: inline-block;*/
       }
 
       .inline-placeholder:after{ 
@@ -19,6 +19,16 @@
         background-color: gray;
       }
 
+      .editing-block {
+        min-width: 100px;
+        display: block;
+        background-color: gray;
+      }
+
+      .editable {
+        white-space:pre;
+      }
+
     </style>
 	</head>
 	<body>
@@ -27,6 +37,14 @@
 				$(".editable").simpleInline();
 			});
 		</script>
-    <p>This <span class="editable" data-inline-placeholder-text="field"></span> is editable</p>
+    <h1>Demo</h1>
+    <h2>Inline edit basic</h2>
+    <p>This <span class="editable">field</span> is editable</p>
+
+    <h2>Inline edit with placeholder</h2>
+    <p>This <span class="editable" data-inline-placeholder-text="placeholder"></span> is editable</p>
+
+    <h2>Inline edit with line breaks</h2>
+    <div class="editable" data-allow-line-breaks="true" data-inline-placeholder-text="Clicke here">This area is editable <br> and has line breaks</div>
 	</body>
 </html>
