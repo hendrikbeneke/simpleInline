@@ -7,7 +7,7 @@
   var pluginName = "simpleInline",
     defaults = {
       allowLineBreaks: false,
-      valueChanged: function(newValue){ 
+      valueChanged: function(newValue) {
         console.log(newValue);
       }
     };
@@ -21,23 +21,25 @@
     this.init();
   }
 
-  function getDataAttributes(element){
+  function getDataAttributes(element) {
     var data = $(element).data(),
       inlineOptions = {};
-    for(var key in data) {
+    for (var key in data) {
       var cKey = optionToCamelCase(key);
       inlineOptions[cKey] = data[key];
     }
     return inlineOptions;
   }
 
-  function optionToCamelCase(option){
-    return option.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase() });
+  function optionToCamelCase(option) {
+    return option.replace(/-([a-z])/g, function(g) {
+      return g[1].toUpperCase();
+    });
   }
 
   Plugin.prototype = {
     init: function() {
-      if(this.settings.allowLineBreaks){
+      if (this.settings.allowLineBreaks) {
         this.convertBrToLf(this.element);
       }
       this.setDefaultEvents();
@@ -45,15 +47,15 @@
       this.setPlaceholderAction();
     },
 
-    setDefaultEvents: function(){
+    setDefaultEvents: function() {
       var _this = this;
-      var editingClass = _this.settings.allowLineBreaks ? 'editing-block' : 'editing'
-      this.element.on('click.editable', function(){
+      var editingClass = _this.settings.allowLineBreaks ? 'editing-block' : 'editing';
+      this.element.on('click.editable', function() {
         $(this).addClass(editingClass);
         $(this).attr("contenteditable", true);
         $(this).focus();
       });
-      this.element.on('blur.editable', function(){
+      this.element.on('blur.editable', function() {
         $(this).removeClass(editingClass);
         $(this).attr("contenteditable", false);
         _this.clearContentIfEmpty(this);
@@ -64,7 +66,7 @@
         if (e.keyCode === 13) {
           e.preventDefault();
           if (_this.settings.allowLineBreaks) {
-            _this.pasteIntoInput(NEW_LINE);    
+            _this.pasteIntoInput(NEW_LINE);
           } else {
             $(this).blur();
           }
@@ -78,7 +80,7 @@
       }
     },
 
-    setPlaceholderAction: function(){
+    setPlaceholderAction: function() {
       var $el = this.element,
         hasPlaceholder = this.hasPlaceholder;
       if (this.hasPlaceholder) {
@@ -97,15 +99,15 @@
       }
     },
 
-    hasPlaceholder: function()  {
-      return !! this.element.data("inline-placeholder-text");
+    hasPlaceholder: function() {
+      return !!this.element.data("inline-placeholder-text");
     },
 
-    getValue: function(){
+    getValue: function() {
       return this.settings.allowLineBreaks ? this.element.text() : this.element.text();
     },
 
-    convertBrToLf: function(el){
+    convertBrToLf: function(el) {
       el.html(el.html().replace(/<br\s*[\/]?>/gi, NEW_LINE));
     },
 
@@ -113,10 +115,10 @@
       document.execCommand("insertHTML", false, html);
     },
 
-    clearContentIfEmpty: function(el){
-      if ($(el).text().trim() == "") {
+    clearContentIfEmpty: function(el) {
+      if ($(el).text().trim() === "") {
         $(el).empty(); // chrome and FF add an extra <br> if the div is empty. we dont want that
-      };
+      }
     }
   };
 

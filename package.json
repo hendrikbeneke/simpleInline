@@ -4,7 +4,7 @@
   "description": "A simple plugin for inline edit using contenteditable.",
 	"author": "Hendrik Beneke",
 	"homepage": "https://github.com/hendrikbeneke/simpleInline/",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"devDependencies": {
 		"grunt": "~0.4.1",
 		"grunt-cli": "~0.1.7",
