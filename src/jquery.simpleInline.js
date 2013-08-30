@@ -7,9 +7,8 @@
   var pluginName = "simpleInline",
     defaults = {
       allowLineBreaks: false,
-      valueChanged: function(newValue) {
-        console.log(newValue);
-      }
+      valueChanged: function() { /* newValue, attributeName */ },
+      attributeName: ""
     };
 
   function Plugin(element, options) {
@@ -59,7 +58,7 @@
         $(this).removeClass(editingClass);
         $(this).attr("contenteditable", false);
         _this.clearContentIfEmpty(this);
-        _this.settings.valueChanged.call(_this, _this.getValue());
+        _this.settings.valueChanged.call(_this, _this.getValue(), _this.settings.attributeName);
       });
 
       this.element.on('keydown.editable', function(e) {
@@ -84,7 +83,7 @@
       var $el = this.element,
         hasPlaceholder = this.hasPlaceholder;
       if (this.hasPlaceholder) {
-        if (!$el.text().trim()) {
+        if (!$.trim($el.text())) {
           $el.addClass("inline-placeholder");
         }
         $el.focusin(function() {
@@ -92,7 +91,7 @@
             $el.removeClass("inline-placeholder");
           }
         }).focusout(function() {
-          if (hasPlaceholder && !$el.text().trim()) {
+          if (hasPlaceholder && !$.trim($el.text())) {
             $el.addClass("inline-placeholder");
           }
         });
@@ -111,12 +110,45 @@
       el.html(el.html().replace(/<br\s*[\/]?>/gi, NEW_LINE));
     },
 
+    // pasteIntoInput: function(html) {
+    //   document.execCommand("insertHTML", false, html);
+    // },
+
     pasteIntoInput: function(html) {
-      document.execCommand("insertHTML", false, html);
+      // (http://stackoverflow.com/a/6691294/2096991)
+      var sel, range;
+      if (window.getSelection) {
+        // IE9 and non-IE
+        sel = window.getSelection();
+        if (sel.getRangeAt && sel.rangeCount) {
+          range = sel.getRangeAt(0);
+          range.deleteContents();
+
+          // Range.createContextualFragment() would be useful here but is
+          // non-standard and not supported in all browsers (IE9, for one)
+          var el = document.createElement("div");
+          el.innerHTML = html;
+          var frag = document.createDocumentFragment(),
+            node, lastNode;
+          while ((node = el.firstChild)) {
+            lastNode = frag.appendChild(node);
+          }
+          range.insertNode(frag);
+
+          // Preserve the selection
+          if (lastNode) {
+            range = range.cloneRange();
+            range.setStartAfter(lastNode);
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
+          }
+        }
+      }
     },
 
     clearContentIfEmpty: function(el) {
-      if ($(el).text().trim() === "") {
+      if ($.trim($(el).text()) === "") {
         $(el).empty(); // chrome and FF add an extra <br> if the div is empty. we dont want that
       }
     }

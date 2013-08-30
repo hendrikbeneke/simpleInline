@@ -2,7 +2,8 @@
 <html>
 	<head>
 		<title>jQuery Simple Inline</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
 		<script src="../src/jquery.simpleInline.js"></script>
     <style type="text/css">
       .inline-placeholder {
@@ -26,7 +27,7 @@
       }
 
       .editable {
-        white-space:pre;
+        white-space:pre-wrap;
       }
 
     </style>
@@ -34,12 +35,20 @@
 	<body>
 		<script>
 			$(function() {
-				$(".editable").simpleInline();
+				$(".editable").simpleInline({
+          valueChanged: function(newValue, attributeName){
+            console.log("New attribute value is " + newValue);
+            console.log("Attribute name is " + attributeName)
+          }
+        });
 			});
 		</script>
     <h1>Demo</h1>
     <h2>Inline edit basic</h2>
     <p>This <span class="editable">field</span> is editable</p>
+
+    <h2>Inline edit with field name</h2>
+    <p>This <span class="editable" data-attribute-name="fieldName">field with name</span> is editable</p>
 
     <h2>Inline edit with placeholder</h2>
     <p>This <span class="editable" data-inline-placeholder-text="placeholder"></span> is editable</p>
